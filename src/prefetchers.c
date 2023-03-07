@@ -31,14 +31,25 @@ uint32_t sequential_handle_mem_access(struct prefetcher *prefetcher,
                                       struct cache_system *cache_system, uint32_t address,
                                       bool is_miss)
 {
+    uint32_t count_fetched = 0;
+    uint32_t amount = *(uint32_t*)(prefetcher->data);
+
+    for(uint32_t i = 1; i <= amount; i++) {
+        cache_system_mem_access(cache_system, address + (cache_system->line_size * i), 'w', true);
+        printf("Prefetched %x with base %x\n", address + (cache_system->line_size * i), address);
+        count_fetched++;
+    }
+
     // TODO: Return the number of lines that were prefetched.
-    return 0;
+    printf("Got %d extra lines in the cache\n", count_fetched);
+    return count_fetched;
 }
 
 void sequential_cleanup(struct prefetcher *prefetcher)
 {
     // TODO cleanup any additional memory that you allocated in the
-    // sequential_prefetcher_new function.
+    // sequential_prefetcher_new function.'
+    free(prefetcher->data);
 }
 
 struct prefetcher *sequential_prefetcher_new(uint32_t prefetch_amount)
@@ -49,6 +60,8 @@ struct prefetcher *sequential_prefetcher_new(uint32_t prefetch_amount)
 
     // TODO allocate any additional memory needed to store metadata here and
     // assign to sequential_prefetcher->data.
+    sequential_prefetcher->data = malloc(sizeof(uint32_t));
+    (*(uint32_t*)sequential_prefetcher->data) = prefetch_amount;
 
     return sequential_prefetcher;
 }
