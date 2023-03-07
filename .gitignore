@@ -9,3 +9,4 @@ matrix_addition/results
 matrix_addition/tools/obj-ia32
 matrix_addition/m_add
 test_results
+.vscode/
