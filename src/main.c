@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     } else if (!strcmp("SEQUENTIAL", prefetch_strategy)) {
         prefetcher = sequential_prefetcher_new(prefetch_amount);
     } else if (!strcmp("CUSTOM", prefetch_strategy)) {
-        prefetcher = custom_prefetcher_new();
+        prefetcher = custom_prefetcher_new(prefetch_amount);
     } else {
         fprintf(stderr, "Unknown replacement policy %s", prefetch_strategy);
         return 1;

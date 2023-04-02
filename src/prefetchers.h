@@ -54,6 +54,6 @@ struct prefetcher {
 struct prefetcher *null_prefetcher_new();
 struct prefetcher *adjacent_prefetcher_new();
 struct prefetcher *sequential_prefetcher_new(uint32_t prefetch_amount);
-struct prefetcher *custom_prefetcher_new();
+struct prefetcher *custom_prefetcher_new(uint32_t prefetch_amount);
 
 #endif
